@@ -23,7 +23,7 @@ class Synonym extends Action{
         this.buttonContainer = d;
 
         //newbox global variable
-        newbox.element.appendChild(this.element);
+        newbox.body.appendChild(this.element);
         this.doStuff();
     }
 
@@ -39,9 +39,15 @@ class Synonym extends Action{
         if(this.data == null){
             //const promise = new Promise((res, rej) => {res(this.requestMeansLike(str));})
             this.data = await this.requestMeansLike(str);
-            if(this.data == ""){
-                this.removeSynButtons();
-                this.createSynButton("No word selected", false);
+            this.setFootnote('Datamuse API', 'skyblue');
+            
+            this.removeSynButtons();
+            if(this.data === ""){
+                this.createSynButton("No word selected", null);
+                return;
+            }
+            else if(this.data.length == 0){
+                const button = this.createSynButton("We couldn't find any synonyms, check if it is in the correct language", null);
                 return;
             }
         }
@@ -59,6 +65,7 @@ class Synonym extends Action{
             this.createPlusButton();
         }
 
+        selection.relocateBox();
     }
 
     async requestMeansLike(str){
@@ -81,24 +88,30 @@ class Synonym extends Action{
         //b.id = "synText";
         b.className = "synBut";
         active ? b.className += " active" : b.className = b.className.replace(" active", "");
+        active == null ? b.className += " error text-left" : b.className;
 
         b.innerHTML = str;
         b.value = str;
         b.addEventListener("mousedown", (el) => {
             if(active){
                 subText(el.target)
+                newbox.removeBox(el.target)
             }
-            newbox.removeBox(el.target)
+            else if(active == false){
+                navigator.clipboard.writeText(el.target.value)
+                newbox.removeBox(el.target)
+            }
         })
 
         this.buttonContainer.appendChild(b);
+        return b;
     }
 
     createPlusButton(){
         this.max += 5;
         const b = document.createElement("button");
 
-        b.id = "plusBut";
+        b.id = "plusButton";
         b.innerHTML = "+";
 
         b.addEventListener("mousedown", (el) => {
@@ -114,9 +127,36 @@ class Synonym extends Action{
     }
 
     removePlusButton(){
-        const pb = this.buttonContainer.querySelector("#plusBut");
+        const pb = this.buttonContainer.querySelector("#plusButton");
         if(pb){
             this.buttonContainer.removeChild(pb);
+        }
+    }
+
+    setFootnote(text, color){
+        var footnoteCaption = document.getElementById("footnote" + text);
+
+        if(footnoteCaption == null){
+            footnoteCaption = document.createElement("div");
+            footnoteCaption.id = "footnote" + text;
+            footnoteCaption.className = "footnoteCaption";
+            
+            var footnoteCircle = document.createElement("div");
+            footnoteCircle.id = "footnoteCircle" + text;
+            footnoteCircle.className = "footnoteCircle";
+
+            footnoteCircle.style.backgroundColor = color;
+            footnoteCaption.appendChild(footnoteCircle);
+
+            var footnoteText = document.createElement("h");
+            footnoteText.id = "footnoteText";
+            footnoteText.innerHTML = text;
+            footnoteCaption.appendChild(footnoteText);
+
+            newbox.footnote.appendChild(footnoteCaption);
+        }
+        else{
+            document.getElementById("footnoteCircle" + text).style.backgroundColor = color;
         }
     }
 }

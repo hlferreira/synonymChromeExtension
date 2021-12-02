@@ -33,7 +33,6 @@ function selectionChange(){
         var sel = window.getSelection();
 
         if(sel.toString() != ""){
-            console.log('here')
             selection = new Selection(sel);
         }
     }
@@ -70,7 +69,8 @@ function selectInput(){
 function isEditable(sel){
     const inputTypes = ['text', 'textarea', 'input', 'email', 'password', 'number', 'email', 'tel', 'url', 'search', 'date', 'datetime', 'datetime-local', 'time', 'month', 'week']
 
-    if(sel.activeElement.contentEditable == "true" || inputTypes.includes(sel.baseNode.nodeName.replace("#", "")) || inputTypes.includes(sel.activeElement.tagName.toLowerCase())){
+    //|| inputTypes.includes(sel.baseNode.nodeName.replace("#", ""))
+    if(sel.activeElement.contentEditable == "true" || inputTypes.includes(sel.activeElement.tagName.toLowerCase())){
         return true
     }
     else

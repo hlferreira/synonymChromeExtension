@@ -1,6 +1,7 @@
 class Selection{
 
     word;
+    rng;
     startPos;
     endPos;
     baseNode;
@@ -8,16 +9,21 @@ class Selection{
 
     constructor(sel){
         this.activeElement = document.activeElement;
-        var rng = sel.getRangeAt(0);
+        this.rng = sel.getRangeAt(0);
 
         this.word = sel.toString();
-        this.startPos = rng.startOffset;
-        this.endPos = rng.endOffset;
+        this.startPos = this.rng.startOffset;
+        this.endPos = this.rng.endOffset;
         this.baseNode = sel.baseNode;
         
         newbox.element.querySelector("#selectedWord").innerHTML = this.word
 
-        var pos = rng.getBoundingClientRect();
+        var pos = this.rng.getBoundingClientRect();
+        newbox.changePosition(pos.x, pos.y - 5);
+    }
+
+    relocateBox(){
+        var pos = this.rng.getBoundingClientRect();
         newbox.changePosition(pos.x, pos.y);
     }
 }

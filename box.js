@@ -1,6 +1,8 @@
 class Box{
 
     static element;
+    static body;
+    static footnote;
 
     constructor(){
         this.element = document.createElement("div");
@@ -31,6 +33,15 @@ class Box{
             if(this.element)
                 this.deleteBox();
         })
+
+        this.body = document.createElement("div");
+        this.body.id = "boxBody";
+        this.element.appendChild(this.body);
+
+        this.footnote = document.createElement("div");
+        this.footnote.id = "footnote";
+
+        this.element.appendChild(this.footnote);
     }
 
     removeBox(target){ //CHECKS IF IT SHOULD BE REMOVED
