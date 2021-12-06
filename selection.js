@@ -18,12 +18,17 @@ class Selection{
         
         newbox.element.querySelector("#selectedWord").innerHTML = this.word
 
-        var pos = this.rng.getBoundingClientRect();
-        newbox.changePosition(pos.x, pos.y - 5);
+        this.relocateBox();
     }
 
     relocateBox(){
-        var pos = this.rng.getBoundingClientRect();
-        newbox.changePosition(pos.x, pos.y);
+        if(isEditableComponent(this.activeElement)){
+            var pos = this.activeElement.getBoundingClientRect();
+        }
+        else{
+            var pos = this.rng.getBoundingClientRect();
+        }
+            
+        newbox.changePosition(pos.x, pos.y - 5);
     }
 }

@@ -44,10 +44,12 @@ class Synonym extends Action{
             this.removeSynButtons();
             if(this.data === ""){
                 this.createSynButton("No word selected", null);
+                selection.relocateBox();
                 return;
             }
             else if(this.data.length == 0){
                 const button = this.createSynButton("We couldn't find any synonyms, check if it is in the correct language", null);
+                selection.relocateBox();
                 return;
             }
         }
@@ -83,12 +85,39 @@ class Synonym extends Action{
     }
 
     createSynButton(str, active){
+        const div = document.createElement("div");
         const b = document.createElement("button");
-        
+        div.className = "synButtonWrapper";
+        div.appendChild(b);
+
         //b.id = "synText";
         b.className = "synBut";
-        active ? b.className += " active" : b.className = b.className.replace(" active", "");
-        active == null ? b.className += " error text-left" : b.className;
+
+        if(active){
+            b.className += " active";
+        }
+        else if(active == null){
+            b.className += " error text-left"
+        }
+        else{
+            b.className.replace(" active", "");
+
+            var svg = document.createElement("img");
+            const cp = chrome.extension.getURL("copypaste.svg");
+            svg.src = cp;
+            svg.hidden = true;
+            svg.id = "svg" + str;
+            svg.style.width = "8px";
+            svg.style.height = "8px";
+            svg.className = "synButCopyPaste";
+            
+            div.appendChild(svg);
+            div.addEventListener("mouseover", () => {
+                div.querySelector("#svg" + str).hidden = false});
+
+            div.addEventListener("mouseout", () => {
+                div.querySelector("#svg" + str).hidden = true});
+        }
 
         b.innerHTML = str;
         b.value = str;
@@ -103,7 +132,7 @@ class Synonym extends Action{
             }
         })
 
-        this.buttonContainer.appendChild(b);
+        this.buttonContainer.appendChild(div);
         return b;
     }
 

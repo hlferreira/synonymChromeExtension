@@ -68,13 +68,18 @@ function selectInput(){
 //rework this
 function isEditable(sel){
     const inputTypes = ['text', 'textarea', 'input', 'email', 'password', 'number', 'email', 'tel', 'url', 'search', 'date', 'datetime', 'datetime-local', 'time', 'month', 'week']
-
     //|| inputTypes.includes(sel.baseNode.nodeName.replace("#", ""))
-    if(sel.activeElement.contentEditable == "true" || inputTypes.includes(sel.activeElement.tagName.toLowerCase())){
+    if(sel.activeElement.contentEditable == "true" || isEditableComponent(sel.activeElement)){
         return true
     }
     else
         return false
+}
+
+function isEditableComponent(el){
+    const inputTypes = ['text', 'textarea', 'input', 'email', 'password', 'number', 'email', 'tel', 'url', 'search', 'date', 'datetime', 'datetime-local', 'time', 'month', 'week']
+
+    return inputTypes.includes(el.tagName.toLowerCase());
 }
 
 function spaceReplace(str){

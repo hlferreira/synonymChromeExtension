@@ -1,0 +1,75 @@
+body{
+    min-width: 300px;
+    max-width: 800px;
+    display: flex;
+    flex-direction: column;
+
+    --font-size-title: 28px;
+    --font-size-normal: 14px;
+    --font-size-tiny: 8px;
+
+    align-items: center;
+}
+
+body > div{
+    padding: 5px;
+    margin-bottom: 2.5px;
+    margin-top:2.5px;
+    align-items: center;
+}
+
+hr{
+    margin: 0;
+}
+
+#extTitle{
+    font-size: var(--font-size-title);
+}
+
+.normalText{
+    font-size: var(--font-size-normal);
+}
+
+.tinyText{
+    font-size: var(--font-size-tiny);
+}
+
+#extPresentation{
+    display: flex;
+    flex-direction: column;
+}
+
+#extPresentation > *{
+    margin-bottom: 5px;
+}
+
+#extExplanation{
+    font-size: 12px;
+    text-align: center;
+}
+
+/**********body***********/
+#extBody{
+    border-radius: 3px;
+    background-color: skyblue;
+    color:black;
+}
+
+#extBody > *{
+    margin-bottom: 5px;
+}
+
+.extLine{
+    position: relative;
+}
+.extLine > hr{
+    position: absolute;
+    left: 0px;
+}
+
+/******footnote*******/
+
+#extFootnote{
+    margin-top:-5px;
+    margin-bottom:-35px;
+}

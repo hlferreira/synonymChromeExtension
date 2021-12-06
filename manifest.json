@@ -9,6 +9,7 @@
             "js": ["content.js", "box.js", "action.js", "synonym.js", "meaning.js" ,"selection.js"]
         }
     ],
+    "web_accessible_resources": ["copypaste.svg"],
     "browser_action":
     {
         "default_popup": "popup.html",
